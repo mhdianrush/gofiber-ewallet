@@ -1,6 +1,8 @@
 package util
 
-import "math/rand"
+import (
+	"math/rand"
+)
 
 func GenerateRandomString(n int) string {
 	var charsets = []rune("ABCDEFGHIJabcdefghij12345678910")
