@@ -15,9 +15,10 @@ type userService struct {
 	cacheRepository domain.CacheRepository
 }
 
-func NewUser(userRepository domain.UserRepository) domain.UserService {
+func NewUser(userRepository domain.UserRepository, cacheRepository domain.CacheRepository) domain.UserService {
 	return &userService{
-		userRepository: userRepository,
+		userRepository:  userRepository,
+		cacheRepository: cacheRepository,
 	}
 }
 
