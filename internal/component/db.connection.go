@@ -14,11 +14,15 @@ var logger = logrus.New()
 func ConnectDB(config *config.Config) *sql.DB {
 	connStr := fmt.Sprintf(
 		"host=%s "+"port=%s "+"user%s "+"password%s "+"dbName%s "+"sslmode=disable",
-		config.Database.Host, config.Database.Port, config.Database.User, config.Database.Password,
-		config.Database.Name,
+		config.Database.Host, config.Database.Port, config.Database.User, config.Database.Password, config.Database.Name,
 	)
 
 	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		logger.Printf("Failed Connect Database %s", err.Error())
+	}
+
+	err = db.Ping()
 	if err != nil {
 		logger.Printf("Failed Connect Database %s", err.Error())
 	}
