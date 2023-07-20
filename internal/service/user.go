@@ -35,9 +35,9 @@ func (u userService) Authenticate(ctx context.Context, req dto.AuthReq) (dto.Aut
 		return dto.AuthRes{}, domain.ErrAuthFailed
 	}
 	// generate token
-	token := util.GenerateRandomString(7)
+	token := util.GenerateRandomString(16)
 	userJson, _ := json.Marshal(user)
-	_ = u.cacheRepository.Set("user: "+token, userJson)
+	_ = u.cacheRepository.Set("user:"+token, userJson)
 
 	return dto.AuthRes{
 		Token: token,
@@ -45,7 +45,7 @@ func (u userService) Authenticate(ctx context.Context, req dto.AuthReq) (dto.Aut
 }
 
 func (u userService) ValidateToken(ctx context.Context, token string) (dto.UserData, error) {
-	data, err := u.cacheRepository.Get("user: " + token)
+	data, err := u.cacheRepository.Get("user:" + token)
 	if err != nil {
 		return dto.UserData{}, domain.ErrAuthFailed
 	}
