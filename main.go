@@ -1,12 +1,15 @@
 package main
 
 import (
+	"gofiber-ewallet/internal/api"
 	"gofiber-ewallet/internal/component"
 	"gofiber-ewallet/internal/config"
+	"gofiber-ewallet/internal/middleware"
 	"gofiber-ewallet/internal/repository"
 	"gofiber-ewallet/internal/service"
 	"os"
 
+	"github.com/gofiber/fiber/v2"
 	"github.com/sirupsen/logrus"
 )
 
@@ -16,7 +19,10 @@ func main() {
 	cacheConnection := component.GetCacheConnnection()
 	userRepository := repository.NewUser(db)
 	userService := service.NewUser(userRepository, cacheConnection)
-	
+	authMid := middleware.Authenticate(userService)
+
+	app := fiber.New()
+	api.NewAuth(app, userService, authMid)
 
 	logger := logrus.New()
 
@@ -27,4 +33,6 @@ func main() {
 	logger.SetOutput(file)
 
 	logger.Println("Server Running on Port 8080")
+
+	_ = app.Listen(config.Server.Host + ":" + config.Server.Port)
 }
