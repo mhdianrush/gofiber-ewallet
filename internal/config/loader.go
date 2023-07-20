@@ -18,11 +18,11 @@ func Get() *Config {
 	}
 
 	return &Config{
-		Server: Server{
+		Server{
 			Host: os.Getenv("SERVER_HOST"),
 			Port: os.Getenv("SERVER_PORT"),
 		},
-		Database: Database{
+		Database{
 			Host:     os.Getenv("DATABASE_HOST"),
 			Port:     os.Getenv("DATABASE_PORT"),
 			User:     os.Getenv("DATABASE_USER"),
