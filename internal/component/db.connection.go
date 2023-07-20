@@ -13,7 +13,7 @@ var logger = logrus.New()
 
 func ConnectDB(config *config.Config) *sql.DB {
 	connStr := fmt.Sprintf(
-		"host=%s "+"port=%s "+"user%s "+"password%s "+"dbName%s "+"sslmode=disable",
+		"host=%s "+"port=%s "+"user=%s "+"password=%s "+"dbname=%s "+"sslmode=disable",
 		config.Database.Host, config.Database.Port, config.Database.User, config.Database.Password, config.Database.Name,
 	)
 
